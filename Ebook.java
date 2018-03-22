@@ -6,7 +6,7 @@ public class Ebook extends TextBook{
     // Constructors
     public Ebook() {
         super();
-        this.access_code = super.getIsbnNum();
+        this.access_code = super.getISBNNum();
         this.access_years = 1;
     }
 
