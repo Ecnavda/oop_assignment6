@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TextBook {
@@ -10,6 +11,8 @@ public class TextBook {
     private String discipline;
     private double base_price;
     private String publisher;
+
+    private static ArrayList<String> isbn_tracking = new ArrayList<String>();
 
     // Constructors
     public TextBook() {
@@ -39,8 +42,9 @@ public class TextBook {
         this.author = author;
     }
 
-    private void setIsbnNum(String isbn_num) {
+    private void setISBNNum(String isbn_num) {
         this.isbn_num = isbn_num;
+        addToISBNTracking(isbn_num);
     }
 
     public void setEdition(String edition) {
@@ -72,7 +76,7 @@ public class TextBook {
         return this.author;
     }
 
-    public String getIsbnNum() {
+    public String getISBNNum() {
         return this.isbn_num;
     }
 
@@ -89,6 +93,7 @@ public class TextBook {
     }
 
     public double getBasePrice() {
+        //TODO return this value displayed as currency
         return this.base_price;
     }
 
@@ -96,17 +101,47 @@ public class TextBook {
         return this.publisher;
     }
 
-    private void CreateISBN() {
+    private void addToISBNTracking(String isbn_num) {
+        isbn_tracking.add(isbn_num);
+    }
+
+    private boolean checkUnique(String isbn) {
+        boolean unique = true;
+        if (!(isbn_tracking.isEmpty())) {
+            for (int i = 0; i < isbn_tracking.size(); i++) {
+                if (isbn.equals(isbn_tracking.get(i))) {
+                    unique = false;
+                    break;
+                }
+            }
+        }
+        return unique;
+    }
+
+    private String generateRandomISBN() {
         Random r = new Random();
         int isbn_digits = r.nextInt(100000);
         char isbn_first_letter = this.author.charAt(0);
         char isbn_second_letter = this.name.charAt(0);
+        if (Character.isDigit(isbn_second_letter)) {
+            isbn_second_letter = 'X';
+        }
         String isbn = String.format("%05d", isbn_digits) + "-" + isbn_first_letter + isbn_second_letter;
-        setIsbnNum(isbn);
-        //TODO check digits for uniqueness before assigning
+        return isbn;
     }
 
-    // Temporary Method for testing -- REMOVE
+    private void CreateISBN() {
+        String isbn = generateRandomISBN();
+        boolean unique = checkUnique(isbn);
+        if (unique) {
+            setISBNNum(isbn);
+        }
+        else {
+            CreateISBN();
+        }
+    }
+
+    //TODO Temporary Method for testing -- REMOVE
     public void getEverything() {
         System.out.println(
                 this.name + "\n" +
@@ -119,4 +154,9 @@ public class TextBook {
                 this.publisher
         );
     }
+
+    public ArrayList<String> getISBNTracking() {
+        return isbn_tracking;
+    }
+
 }
