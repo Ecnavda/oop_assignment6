@@ -1,3 +1,5 @@
+import java.text.NumberFormat;
+
 public class Ebook extends TextBook{
 
     private String access_code;
@@ -30,12 +32,13 @@ public class Ebook extends TextBook{
     }
 
     // Methods
-    public double calculatePrice() {
-        if (access_years < 5) {
-            return getBasePrice() * this.access_years;
+    public String calculatePrice() {
+        NumberFormat money = NumberFormat.getCurrencyInstance();
+        if (this.access_years < 5) {
+            return money.format(getBasePrice() * this.access_years);
         }
         else {
-            return getBasePrice() * 5;
+            return money.format(getBasePrice() * 5);
         }
     }
 

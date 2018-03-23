@@ -1,9 +1,12 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PaperBackText extends TextBook {
 
     private String registration_id;
     private double markup;
+
+    private static ArrayList<String> registration_tracking = new ArrayList<String>();
 
     public PaperBackText() {
         super();
@@ -13,6 +16,7 @@ public class PaperBackText extends TextBook {
     // Mutators - Setters
     private void setRegistrationId(String registration_id) {
         this.registration_id = registration_id;
+        addRegistrationTracking(registration_id);
     }
 
     public void setMarkup(double markup) {
@@ -28,7 +32,7 @@ public class PaperBackText extends TextBook {
         return this.markup;
     }
 
-    private void createRegistrationID() {
+    private String generateRegistrationID() {
         Random r = new Random();
         int[] rand_ints = r.ints(4, 0, 65536).toArray();
         String registration_id = "";
@@ -38,6 +42,21 @@ public class PaperBackText extends TextBook {
                 registration_id += "-";
             }
         }
-        setRegistrationId(registration_id);
+        return registration_id;
+    }
+
+    private void addRegistrationTracking(String registration_id) {
+        registration_tracking.add(registration_id);
+    }
+
+    private void createRegistrationID() {
+        String registration_id = generateRegistrationID();
+        boolean unique = checkUnique(registration_id, registration_tracking);
+        if (unique) {
+            setRegistrationId(registration_id);
+        }
+        else {
+            createRegistrationID();
+        }
     }
 }

@@ -1,3 +1,4 @@
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -93,7 +94,6 @@ public class TextBook {
     }
 
     public double getBasePrice() {
-        //TODO return this value displayed as currency
         return this.base_price;
     }
 
@@ -101,15 +101,20 @@ public class TextBook {
         return this.publisher;
     }
 
+    public String getBasePriceCurrency() {
+        NumberFormat money = NumberFormat.getCurrencyInstance();
+        return money.format(this.base_price);
+    }
+
     private void addToISBNTracking(String isbn_num) {
         isbn_tracking.add(isbn_num);
     }
 
-    private boolean checkUnique(String isbn) {
+    protected boolean checkUnique(String unique_id, ArrayList<String> tracking_list) {
         boolean unique = true;
-        if (!(isbn_tracking.isEmpty())) {
-            for (int i = 0; i < isbn_tracking.size(); i++) {
-                if (isbn.equals(isbn_tracking.get(i))) {
+        if (!(tracking_list.isEmpty())) {
+            for (int i = 0; i < tracking_list.size(); i++) {
+                if (unique_id.equals(tracking_list.get(i))) {
                     unique = false;
                     break;
                 }
@@ -132,7 +137,7 @@ public class TextBook {
 
     private void CreateISBN() {
         String isbn = generateRandomISBN();
-        boolean unique = checkUnique(isbn);
+        boolean unique = checkUnique(isbn, isbn_tracking);
         if (unique) {
             setISBNNum(isbn);
         }
@@ -141,20 +146,11 @@ public class TextBook {
         }
     }
 
-    //TODO Temporary Method for testing -- REMOVE
+    //TODO remove
     public void getEverything() {
-        System.out.println(
-                this.name + "\n" +
-                this.author + "\n" +
-                this.isbn_num + "\n" +
-                this.edition + "\n" +
-                Integer.toString(this.published_year) + "\n" +
-                this.discipline + "\n" +
-                Double.toString(this.base_price) + "\n" +
-                this.publisher
-        );
-    }
 
+    }
+    //TODO remove
     public ArrayList<String> getISBNTracking() {
         return isbn_tracking;
     }

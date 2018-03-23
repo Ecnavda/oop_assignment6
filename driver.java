@@ -19,10 +19,14 @@ public class driver {
         test3.setEdition("Fifth");
         test3.setPublisher("Smash Mouf");
         test3.getEverything();
+        System.out.println(test3.getISBNTracking());
 
         System.out.println();
 
-        System.out.println(test3.getISBNTracking());
+        TextBook test4 = new TextBook();
+        test4.getEverything();
+
+        System.out.println(test4.getISBNTracking());
     }
 
 }
