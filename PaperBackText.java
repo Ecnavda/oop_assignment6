@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class PaperBackText extends TextBook {
@@ -6,7 +7,7 @@ public class PaperBackText extends TextBook {
     private String registration_id;
     private double markup;
 
-    private static ArrayList<String> registration_tracking = new ArrayList<String>();
+    private static List<String> registration_tracking = new ArrayList<String>();
 
     public PaperBackText() {
         super();

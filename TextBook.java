@@ -1,5 +1,6 @@
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TextBook {
@@ -13,7 +14,7 @@ public class TextBook {
     private double base_price;
     private String publisher;
 
-    private static ArrayList<String> isbn_tracking = new ArrayList<String>();
+    private static List<String> isbn_tracking = new ArrayList<String>();
 
     // Constructors
     public TextBook() {
@@ -110,7 +111,8 @@ public class TextBook {
         isbn_tracking.add(isbn_num);
     }
 
-    protected boolean checkUnique(String unique_id, ArrayList<String> tracking_list) {
+    //package private
+    boolean checkUnique(String unique_id, List<String> tracking_list) {
         boolean unique = true;
         if (!(tracking_list.isEmpty())) {
             for (int i = 0; i < tracking_list.size(); i++) {
@@ -147,11 +149,7 @@ public class TextBook {
     }
 
     //TODO remove
-    public void getEverything() {
-
-    }
-    //TODO remove
-    public ArrayList<String> getISBNTracking() {
+    public List<String> getISBNTracking() {
         return isbn_tracking;
     }
 
