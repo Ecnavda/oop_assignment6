@@ -12,8 +12,9 @@ public class Ebook extends TextBook{
         this.access_years = 1;
     }
 
-    public Ebook(int access_years) {
-        super();
+    public Ebook(String name, String author, int published_year, String discipline, double base_price, int access_years) {
+        super(name, author, published_year, discipline, base_price);
+        this.access_code = super.getISBNNum();
         this.access_years = access_years;
     }
 

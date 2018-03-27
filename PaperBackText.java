@@ -1,3 +1,4 @@
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,6 +13,13 @@ public class PaperBackText extends TextBook {
     public PaperBackText() {
         super();
         createRegistrationID();
+        setMarkup(.1);
+    }
+
+    public PaperBackText(String name, String author, int published_year, String discipline, double base_price, double markup) {
+        super(name, author, published_year, discipline, base_price);
+        createRegistrationID();
+        setMarkup(markup);
     }
 
     // Mutators - Setters
@@ -59,5 +67,15 @@ public class PaperBackText extends TextBook {
         else {
             createRegistrationID();
         }
+    }
+
+    public String calculatePrice() {
+        NumberFormat money = NumberFormat.getCurrencyInstance();
+        return money.format(getBasePrice() * (1 + this.markup));
+    }
+
+    //TODO remove
+    public List<String> getRegistrationTracking() {
+        return registration_tracking;
     }
 }
